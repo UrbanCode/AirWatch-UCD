@@ -1,28 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pluginInfo>
   <!-- Do not change the release-version, the build process injects it. -->
-  <release-version>@RELEASE_VERSION@</release-version>
+  <release-version>2.0</release-version>
 
   <release-notes>
-    <!--
-      The release-note should document the changes, improvements, or bug fixes introduced
-      with the new plugin version
-
-      The release-note may contain text
-
-      For example your release note could be:
-      Support for was added for version 10.0 for software X
-
-      To add a new release note add this with a description in it of the changes:
-      <release-note plugin-version="1">....</release-note>
-    -->
-
-    <release-note plugin-version="1">
-      Installing this plugin will give you access to the steps listed below. These steps can be used when designing a build.
-    </release-note>
-
     <release-note plugin-version="2">
-      Added a name property to the Hello World step
+       Initial version of uploading an IPA to VM AirWatch 8.4.
     </release-note>
   </release-notes>
+
 </pluginInfo>
