@@ -52,7 +52,7 @@ task distPlugin(type: Zip, dependsOn: ['compileGroovy']) {
 task cleanAll(dependsOn: ['clean', 'cleanCopyDeps', 'cleanDistPlugin'])
 
 task runScript (dependsOn: 'classes', type: JavaExec) {
-    main = 'airwatch-local'
+    main = 'airwatch-ucd'
     classpath = sourceSets.main.runtimeClasspath
 }
 

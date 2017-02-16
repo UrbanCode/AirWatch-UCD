@@ -25,7 +25,6 @@ class AirWatchClient {
     def uploadIpa(String fileName, String applicationName, smartGroup) {
         def transactionId = uploadApplicationChunks(fileName)
         def applicationId = saveRecord(transactionId, applicationName)
-        removeIpa(applicationId)
     }
 
     def uploadApplicationChunks(fileName) {
