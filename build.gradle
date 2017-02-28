@@ -52,7 +52,7 @@ task distPlugin(type: Zip, dependsOn: ['compileGroovy']) {
 task cleanAll(dependsOn: ['clean', 'cleanCopyDeps', 'cleanDistPlugin'])
 
 task runScript (dependsOn: 'classes', type: JavaExec) {
-    main = 'airwatch-ucd'
+    main = 'AirWatch-Ipa-upload'
     classpath = sourceSets.main.runtimeClasspath
+    args "test/input.props", "test/output.props"
 }
-

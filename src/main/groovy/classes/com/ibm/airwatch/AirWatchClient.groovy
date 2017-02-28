@@ -1,11 +1,11 @@
-import com.urbancode.air.AirPluginTool;
+package com.ibm.airwatch 
+
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import static groovyx.net.http.Method.POST
 import static groovyx.net.http.Method.DELETE
 
 class AirWatchClient {
-
     def baseUrl
     def authToken
     def basicAuth
@@ -22,9 +22,20 @@ class AirWatchClient {
         deleteApplication(applicationId)
     }
 
-    def uploadIpa(String fileName, String applicationName, smartGroup) {
+    def uploadIpa(String fileName, String applicationName, def iphoneSupport, def ipadSupport) {
+        boolean iphone = Boolean.parseBoolean(iphoneSupport)
+        boolean iPad = Boolean.parseBoolean(ipadSupport)
+
+        /* need to specify at least once device if none have been specified. */
+        if (!iphone && !iPad) {
+            println "lets go ipad"
+            iPad = true
+        }
+    
         def transactionId = uploadApplicationChunks(fileName)
-        def applicationId = saveRecord(transactionId, applicationName)
+        def applicationId = saveRecord(transactionId, applicationName,iphone, iPad)
+
+        println "Uploaded application id: " + applicationId
     }
 
     def uploadApplicationChunks(fileName) {
@@ -81,21 +92,32 @@ class AirWatchClient {
         return transactionId
     }
 
-    def saveRecord(String transactionId, String applicationName) {
+    def saveRecord(String transactionId, String applicationName,boolean iphoneSupport, boolean ipadSupport) {
         
         def applicationId
 
         def url = baseUrl + "api/mam/apps/internal/begininstall"
         HTTPBuilder http = new HTTPBuilder(url)
 
+        def supportedDevices = [Model: [] ]
+
+        if (iphoneSupport) {
+            supportedDevices["Model"].add([ModelId : 1, ModelName:"iPhone"])
+        }
+
+        if (ipadSupport) {
+            supportedDevices["Model"].add( [ModelId : 2, ModelName:"iPad"])
+        }
+
         http.request(POST) {
 
+         
             body = [TransactionId: transactionId,
                     AutoUpdateVersion: true,
                     DeviceType: "2",
                     ApplicationName: applicationName,
                     PushMode: "OnDemand",
-                    SupportedModels: [Model: [[ModelId : 1, ModelName:"iPhone"], [ModelId : 2, ModelName:"iPad"]]]]
+                    SupportedModels: supportedDevices]
 
             requestContentType = ContentType.JSON
 
@@ -197,17 +219,3 @@ class AirWatchClient {
     }
 
 }
-
-final airTool = new AirPluginTool(args[0], args[1])
-final props = airTool.getStepProperties()
-
-def baseUrl = props["baseUrl"]
-def authToken = props["authToken"]
-def userName = props["userName"]
-def password = props["password"]
-def smartGroup = props["smartGroup"]
-def filePath = props["filePath"]
-def applicationName = props["applicationName"]
-
-AirWatchClient client = new AirWatchClient(baseUrl,authToken,userName,password)
-client.uploadIpa(filePath, applicationName, smartGroup)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <header>
-      <identifier id="com.urbancode.air.plugin.Airwatch" version="2" name="AirWatch" />
+      <identifier id="com.urbancode.air.plugin.Airwatch" version="3" name="AirWatch" />
       <description>UrbanCode Deploy plugin for VMWare AirWatch to deploy IPA.</description>
       <tag>Mobile/AirWatch</tag>
    </header>
@@ -26,6 +26,39 @@
          <property name="authToken" required="true">
             <property-ui type="secureBox" label="Auth Token" description="AirWatch authentication token" default-value="SJMjwMH2dMf9LGyTkLbXhsiKu2WDWThAKFa508Tca2Y="  />
          </property>
+      </properties>
+      <post-processing><![CDATA[if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }]]></post-processing>
+      <command program="${GROOVY_HOME}/bin/groovy">
+         <arg value="-cp" />
+         <arg path="classes:lib/commons-beanutils-1.8.0.jar:lib/groovy-all-2.4.7.jar:lib/json-lib-2.3-jdk15.jar:lib/commons-codec-1.9.jar:lib/groovy-plugin-utils-1.0.jar:lib/nekohtml-1.9.16.jar:lib/commons-collections-3.2.1.jar:lib/gson-2.3.1.jar:lib/xercesImpl-2.9.1.jar:lib/commons-lang-2.4.jar:lib/http-builder-0.7.1.jar:lib/xml-apis-1.3.04.jar:lib/commons-logging-1.2.jar:lib/httpclient-4.5.2.jar:lib/xml-resolver-1.2.jar:lib/ezmorph-1.0.6.jar:lib/httpcore-4.4.5.jar" />
+         <arg file="AirWatch-Ipa-upload.groovy" />
+         <arg file="${PLUGIN_INPUT_PROPS}" />
+         <arg file="${PLUGIN_OUTPUT_PROPS}" />
+      </command>
+   </step-type>
+  <step-type name="Assign IPA to group">
+      <description>Deploy IPA to AirWatch instance</description>
+      <properties>
+         <property name="baseUrl" required="true">
+            <property-ui type="textBox" label="AirWatch URL" description="AirWatch API base URL." default-value="https://cn76.airwatchportals.com/" />
+         </property>
+         <property name="userName" required="true">
+            <property-ui type="textBox" label="User Name" description="AirWatch username"  default-value="uadevops"  />
+         </property>
+         <property name="password" required="true">
+            <property-ui type="secureBox" label="Password" description="AirWatch password" />
+         </property>
+         <property name="applicationId" required="true">
+            <property-ui type="textBox" label="Application Name" description="Application name" />
+         </property>
+         <property name="authToken" required="true">
+            <property-ui type="secureBox" label="Auth Token" description="AirWatch authentication token" default-value="SJMjwMH2dMf9LGyTkLbXhsiKu2WDWThAKFa508Tca2Y="  />
+         </property>
          <property name="smartGroup" required="true">
             <property-ui type="textBox" label="Smart Group" description="AirWatch smart group to assign IPA to" default-value="861"  />
          </property>
@@ -39,7 +72,7 @@
       <command program="${GROOVY_HOME}/bin/groovy">
          <arg value="-cp" />
          <arg path="classes:lib/commons-beanutils-1.8.0.jar:lib/groovy-all-2.4.7.jar:lib/json-lib-2.3-jdk15.jar:lib/commons-codec-1.9.jar:lib/groovy-plugin-utils-1.0.jar:lib/nekohtml-1.9.16.jar:lib/commons-collections-3.2.1.jar:lib/gson-2.3.1.jar:lib/xercesImpl-2.9.1.jar:lib/commons-lang-2.4.jar:lib/http-builder-0.7.1.jar:lib/xml-apis-1.3.04.jar:lib/commons-logging-1.2.jar:lib/httpclient-4.5.2.jar:lib/xml-resolver-1.2.jar:lib/ezmorph-1.0.6.jar:lib/httpcore-4.4.5.jar" />
-         <arg file="airwatch-ucd.groovy" />
+         <arg file="AirWatch-Ipa-assign.groovy" />
          <arg file="${PLUGIN_INPUT_PROPS}" />
          <arg file="${PLUGIN_OUTPUT_PROPS}" />
       </command>
