@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <header>
-      <identifier id="com.urbancode.air.plugin.Airwatch" version="3" name="AirWatch" />
+      <identifier id="com.urbancode.air.plugin.Airwatch" version="4" name="AirWatch" />
       <description>UrbanCode Deploy plugin for VMWare AirWatch to deploy IPA.</description>
       <tag>Mobile/AirWatch</tag>
    </header>
@@ -25,6 +25,12 @@
          </property>
          <property name="authToken" required="true">
             <property-ui type="secureBox" label="Auth Token" description="AirWatch authentication token" default-value="SJMjwMH2dMf9LGyTkLbXhsiKu2WDWThAKFa508Tca2Y="  />
+         </property>
+         <property name="iPhoneSupport">
+            <property-ui type="checkBox" label="iPhone Support" description="Makes application in VMWare AirWatch avaiiable to iphone devices." default-value="true" />
+         </property>
+         <property name="iPadSupport">
+            <property-ui type="checkBox" label="iPad Support" description="Makes application in VMWare AirWatch avaiiable to ipad devices." default-value="true" />
          </property>
       </properties>
       <post-processing><![CDATA[if (properties.get("exitCode") != 0) {

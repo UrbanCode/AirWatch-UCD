@@ -16,3 +16,5 @@ def iPadSupport = props["iPadSupport"]
 
 AirWatchClient client = new AirWatchClient(baseUrl,authToken,userName,password)
 client.uploadIpa(filePath, applicationName, iphoneSupported, iPadSupport)
+
+

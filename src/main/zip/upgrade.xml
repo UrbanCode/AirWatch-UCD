@@ -16,4 +16,10 @@
     <migrate-command name="Deploy IPA">
     </migrate-command>
   </migrate>
+  
+  <migrate to-version="4">
+    <migrate-command name="Deploy IPA">
+    </migrate-command>
+  </migrate>
+
 </plugin-upgrade>
