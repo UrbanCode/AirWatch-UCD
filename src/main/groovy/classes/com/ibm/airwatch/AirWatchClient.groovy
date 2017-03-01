@@ -23,17 +23,9 @@ class AirWatchClient {
     }
 
     def uploadIpa(String fileName, String applicationName, def iphoneSupport, def ipadSupport) {
-        boolean iphone = Boolean.parseBoolean(iphoneSupport)
-        boolean iPad = Boolean.parseBoolean(ipadSupport)
-
-        /* need to specify at least once device if none have been specified. */
-        if (!iphone && !iPad) {
-            println "lets go ipad"
-            iPad = true
-        }
     
         def transactionId = uploadApplicationChunks(fileName)
-        def applicationId = saveRecord(transactionId, applicationName,iphone, iPad)
+        def applicationId = saveRecord(transactionId, applicationName,iphoneSupport, ipadSupport)
 
         println "Uploaded application id: " + applicationId
     }

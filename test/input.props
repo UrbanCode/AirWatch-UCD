@@ -4,5 +4,4 @@ userName=
 password=
 filePath=
 applicationName=TestAirWatch
-iPhoneSupport=false
-iPadSupport=false
+supportedDevices=both

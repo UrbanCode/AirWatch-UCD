@@ -26,11 +26,8 @@
          <property name="authToken" required="true">
             <property-ui type="secureBox" label="Auth Token" description="AirWatch authentication token" default-value="SJMjwMH2dMf9LGyTkLbXhsiKu2WDWThAKFa508Tca2Y="  />
          </property>
-         <property name="iPhoneSupport">
-            <property-ui type="checkBox" label="iPhone Support" description="Makes application in VMWare AirWatch avaiiable to iphone devices." default-value="true" />
-         </property>
-         <property name="iPadSupport">
-            <property-ui type="checkBox" label="iPad Support" description="Makes application in VMWare AirWatch avaiiable to ipad devices." default-value="true" />
+         <property name="supportedDevices">
+            <property-ui type="textBox" label="Supported Devices" description="Supported devices for this application (tablet, phone or both)" default-value="both" />
          </property>
       </properties>
       <post-processing><![CDATA[if (properties.get("exitCode") != 0) {
