@@ -2,6 +2,6 @@ baseUrl=https://cn76.airwatchportals.com/
 authToken=
 userName=
 password=
-filePath=
+filePath=/Users/marcusroy/ibm/TestAirwatch 2017-02-28 11-20-15/TestAirWatch.ipa
 applicationName=TestAirWatch
 supportedDevices=both
