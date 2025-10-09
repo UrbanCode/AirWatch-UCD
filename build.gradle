@@ -15,11 +15,11 @@ repositories {
 }
 
 dependencies {
-    compile 'com.ibm.urbancode.plugins:groovy-plugin-utils:1.0'
-    compile localGroovy()
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
-    compile group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
-    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.5'
+    implementation 'com.ibm.urbancode.plugins:groovy-plugin-utils:1.0'
+    implementation localGroovy()
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    implementation group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
+    implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.5'
 }
 
 sourceSets {
@@ -46,13 +46,17 @@ task distPlugin(type: Zip, dependsOn: ['compileGroovy']) {
     into('locale') {
         from buildLocaleDir
     }
-    archiveName = "${pluginName}-${releaseVersion}.zip"
+    archiveFileName = "${pluginName}-${releaseVersion}.zip"
+}
+
+tasks.named('distPlugin') {
+    dependsOn tasks.named('compileGroovy')
 }
 
 task cleanAll(dependsOn: ['clean', 'cleanCopyDeps', 'cleanDistPlugin'])
 
 task runScript (dependsOn: 'classes', type: JavaExec) {
-    main = 'AirWatch-Ipa-upload'
+	mainClass.set('AirWatch-Ipa-upload')
     classpath = sourceSets.main.runtimeClasspath
     args "test/input.props", "test/output.props"
 }
