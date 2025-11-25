@@ -1,4 +1,4 @@
-package com.ibm.airwatch 
+package classes.com.ibm.airwatch
 
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder

@@ -1,10 +1,10 @@
 package com.ibm.airwatch
 
 import com.urbancode.air.AirPluginTool;
-import com.ibm.airwatch.AirWatchClient;
+import classes.com.ibm.airwatch.AirWatchClient
 
-final airTool = new AirPluginTool(args[0], args[1])
-final props = airTool.getStepProperties()
+airTool = new AirPluginTool(args[0], args[1])
+props = airTool.getStepProperties()
 
 def baseUrl = props["baseUrl"]
 def authToken = props["authToken"]
